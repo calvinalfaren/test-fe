@@ -1,0 +1,95 @@
+<!-- <app-template>
+
+  <button mat-icon-button style="margin-right: 7px" routerLink="/"><mat-icon color="primary">keyboard_backspace</mat-icon></button>
+
+  <h1>{{ data?.username }}</h1>
+  <h1>{{ data?.firstName }}</h1>
+  <h1>{{ data?.lastName }}</h1>
+  <h1>{{ data?.email }}</h1>
+  <h1>{{ data?.birthDate | date:'fullDate' }}</h1>
+  <h1>{{ data?.basicSalary | currency:'Rp. ' }}</h1>
+  <h1>{{ data?.status }}</h1>
+  <h1>{{ data?.group }}</h1>
+  <h1>{{ data?.description }}</h1>
+
+</app-template> -->
+<app-template>
+
+  <div class="mb-4 sm:w-1/2 sm:m-auto sm:my-4 m-4 pb-4 bg-white p-4">
+    <!-- <form> -->
+    <form [formGroup]="formEmployee" class="space-y-6">
+      <div class="space-y-12">
+        <div class="border-b border-gray-900/10 pb-12">
+          <div class="flex">
+            <!-- <mat-icon aria-hidden="false" aria-label="Back icon" fontIcon="home"></mat-icon> -->
+            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon> -->
+            <!-- <mat-icon>keyboard_backspace</mat-icon> -->
+            <button mat-icon-button style="margin-right: 7px" (click)="cancel()"><mat-icon color="primary">keyboard_backspace</mat-icon></button>
+
+            <h2 class="text-base font-semibold leading-7 text-gray-900" style="margin: 0; line-height: 40px;">Detail Employee</h2>
+          </div>
+
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" class="rounded-full m-auto w-52" alt="">
+          <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <mat-form-field class="col-span-full" appearance="outline">
+              <mat-label>Username</mat-label>
+              <input formControlName="username" matInput  class="block w-full rounded-2xl" />
+            </mat-form-field>
+
+            <mat-form-field class="sm:col-span-3" appearance="outline">
+              <mat-label>Fisrt Name</mat-label>
+              <input formControlName="firstName" autocomplete="off" matInput class="block w-full rounded-2xl" required  />
+            </mat-form-field>
+
+            <mat-form-field class="sm:col-span-3" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input formControlName="lastName" autocomplete="off" matInput class="block w-full rounded-2xl" required  />
+            </mat-form-field>
+
+            <mat-form-field class="col-span-full" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input formControlName="email" autocomplete="off" matInput class="block w-full rounded-2xl" required  />
+            </mat-form-field>
+
+            <mat-form-field class="col-span-full flex" appearance="outline">
+              <mat-label>Birth Date</mat-label>
+
+              <div class="flex">
+                <input matInput formControlName="birthDate" [matDatepicker]="picker" required >
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
+              <mat-hint>MM/DD/YYYY</mat-hint>
+            </mat-form-field>
+
+
+            <mat-form-field class="col-span-full" appearance="outline">
+              <mat-label>Basic Salary</mat-label>
+              <input formControlName="basicSalary" autocomplete="off" matInput currencyMask [options]="{ prefix: 'Rp ' }" class="block w-full rounded-2xl" required  />
+            </mat-form-field>
+
+            <mat-form-field class="col-span-full" appearance="outline">
+              <mat-label>Status</mat-label>
+              <input formControlName="status" autocomplete="off" matInput class="block w-full rounded-2xl" required  />
+            </mat-form-field>
+
+            <mat-form-field class="col-span-full" appearance="outline">
+              <mat-label>Group</mat-label>
+              <input formControlName="group" matInput class="block w-full rounded-2xl" required  />
+            </mat-form-field>
+
+            <mat-form-field class="col-span-full" appearance="outline">
+              <mat-label>Description</mat-label>
+              <textarea formControlName="description" autocomplete="off" matInput class="block w-full rounded-2xl" required ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-x-6">
+        <button mat-raised-button (click)="cancel()" color="primary">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+</app-template>

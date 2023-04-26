@@ -7,17 +7,23 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
-    TemplateComponent
+    TemplateComponent,
+    DialogDeleteComponent
   ],
   imports: [
     CommonModule,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   exports: [
     TemplateComponent

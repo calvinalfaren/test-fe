@@ -1,11 +1,16 @@
+import { DialogDeleteComponent } from './../template/dialog-delete/dialog-delete.component';
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 // import {MatSort, SortDirection} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-// import {merge, Observable, of as observableOf} from 'rxjs';
-// import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import { EmployeeModel } from './employee.model';
+import employeeData from '../../data/employee.json';
+import { SearchService } from 'src/app/service/search.service';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { EmployeeService } from 'src/app/service/employee.service';
+
 
 @Component({
   selector: 'app-employee',
@@ -14,53 +19,46 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class EmployeeComponent implements AfterViewInit  {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['username', 'firstName', 'lastName', 'email', 'birthDate', 'basicSalary', 'status', 'group', 'description', 'action'];
+
+  ELEMENT_DATA: EmployeeModel[] = this.employeeService.getData();
+  dataSource = new MatTableDataSource<EmployeeModel>(this.ELEMENT_DATA);
+  searchInput: any = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  constructor(
+    private searchsService: SearchService,
+    public dialog: MatDialog,
+    public employeeService: EmployeeService
+  ) {
+    this.searchInput = this.searchsService.getSearchInput()
+    if (this.searchInput) {
+      this.applyFilter(this.searchInput)
+    }
+  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+  applyFilter(value: string) {
+    const filterValue = value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+
+    this.searchsService.setSearchInput(filterValue);
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DialogDeleteComponent, {
+      width: '250px',
+      // enterAnimationDuration,
+      // exitAnimationDuration,
+    });
   }
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
