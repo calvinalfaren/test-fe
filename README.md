@@ -1,3 +1,7 @@
+1. yarn install or npm install
+2. ng serve or yarn start
+-----------------------------------------------------------------------------------------------------------------------------
+
 # TestFe
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.10.
